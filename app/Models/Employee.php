@@ -15,4 +15,9 @@ class Employee extends Model
     protected $casts = [
         'status' => EmployeeStatus::class,
     ];
+
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class);
+    }
 }

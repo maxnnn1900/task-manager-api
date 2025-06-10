@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\TaskAssignmentController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('employees', EmployeeController::class);
+Route::apiResource('tasks', TaskController::class);
+Route::post('/tasks/{task}/assign', [TaskAssignmentController::class, 'assign']);
+Route::post('/tasks/{task}/unassign', [TaskAssignmentController::class, 'unassign']);
