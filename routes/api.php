@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('employees', EmployeeController::class);
 
+Route::get('/tasks/grouped-by-status', [TaskController::class, 'groupedByStatus']);
 Route::prefix('tasks')->group(function () {
     Route::post('{task}/assign', [TaskAssignmentController::class, 'assign']);
     Route::post('{task}/unassign', [TaskAssignmentController::class, 'unassign']);

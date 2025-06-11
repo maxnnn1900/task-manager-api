@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\TaskStatus;
 use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
@@ -35,4 +36,11 @@ class TaskController extends Controller
         $task->delete();
         return response()->noContent();
     }
+
+    public function groupedByStatus()
+    {
+        $tasks = Task::all()->groupBy('status');
+        return response()->json($tasks);
+    }
+
 }
