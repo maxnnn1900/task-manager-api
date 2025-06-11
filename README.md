@@ -66,13 +66,31 @@ make refresh
 * Laravel Queue (Redis)
 * Laravel Scheduler
 
+---
+
 ## Структура API
 
+### Сотрудники
+
 * `GET /api/employees` — список сотрудников с ролями
-* `POST /api/employees/{id}/assign-role` — назначить роль
-* `POST /api/tasks` — создать задачу (ограничено по IP)
-* `POST /api/tasks/{id}/assign` — назначить сотрудников
-* `GET /api/tasks/grouped-by-status` — задачи по статусам
+* `GET /api/employees/{id}` — получить одного сотрудника с ролями
+* `POST /api/employees` — создать нового сотрудника
+* `PUT /api/employees/{id}` — обновить сотрудника
+* `DELETE /api/employees/{id}` — удалить сотрудника
+* `POST /api/employees/{id}/assign-role` — назначить роль сотруднику
+* `POST /api/employees/{id}/remove-role` — снять роль с сотрудника
 
+---
 
+### Задачи
 
+* `GET /api/tasks` — список задач с фильтрами, сортировкой и пагинацией
+* `GET /api/tasks/{id}` — получить одну задачу
+* `POST /api/tasks` — создать задачу (ограничение 2 в минуту с одного IP)
+* `PUT /api/tasks/{id}` — обновить задачу (триггерит уведомления при изменении статуса)
+* `DELETE /api/tasks/{id}` — удалить задачу
+* `POST /api/tasks/{id}/assign` — назначить задачу одному или нескольким сотрудникам
+* `POST /api/tasks/{id}/unassign` — снять назначение задачи с сотрудника(ов)
+* `GET /api/tasks/grouped-by-status` — получить список задач, сгруппированных по статусу
+
+---
