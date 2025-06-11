@@ -18,8 +18,8 @@ RESTful система управления задачами и сотрудни
 
 1. Клонировать репозиторий:
    ```bash
-   git clone https://github.com/yourname/task-manager.git
-   cd task-manager
+   git clone https://github.com/yourname/task-manager-api.git
+   cd task-manager-api
    ```
 
 2. Скопировать `.env` и настроить при необходимости:
