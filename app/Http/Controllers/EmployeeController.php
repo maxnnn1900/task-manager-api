@@ -10,7 +10,7 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        return Employee::all();
+        return Employee::with('roles')->get();
     }
 
     public function store(StoreEmployeeRequest $request)
@@ -21,7 +21,7 @@ class EmployeeController extends Controller
 
     public function show(Employee $employee)
     {
-        return $employee;
+        return $employee->load('roles');
     }
 
     public function update(UpdateEmployeeRequest $request, Employee $employee)
