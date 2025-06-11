@@ -6,6 +6,7 @@ use App\Enums\TaskStatus;
 use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Notifications\TaskStatusChangedNotification;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -57,7 +58,20 @@ class TaskController extends Controller
 
     public function update(UpdateTaskRequest $request, Task $task)
     {
+        $oldStatus = $task->status;
         $task->update($request->validated());
+        $newStatus = $task->status;
+
+        if (
+            $oldStatus !== $newStatus &&
+            in_array($newStatus, [TaskStatus::InProgress, TaskStatus::Done])
+        ) {
+            foreach ($task->employees as $employee) {
+                $employee->notify(new TaskStatusChangedNotification($task));
+            }
+        }
+
+        $task->unsetRelations();
         return response()->json($task);
     }
 
