@@ -22,6 +22,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('employees', EmployeeController::class);
-Route::apiResource('tasks', TaskController::class);
-Route::post('/tasks/{task}/assign', [TaskAssignmentController::class, 'assign']);
-Route::post('/tasks/{task}/unassign', [TaskAssignmentController::class, 'unassign']);
+
+Route::prefix('tasks')->group(function () {
+    Route::post('{task}/assign', [TaskAssignmentController::class, 'assign']);
+    Route::post('{task}/unassign', [TaskAssignmentController::class, 'unassign']);
+});
+
+Route::apiResource('tasks', TaskController::class)->except(['store']);
+Route::post('/tasks', [TaskController::class, 'store'])->middleware('throttle:task-creation');
+
